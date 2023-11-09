@@ -4,6 +4,9 @@ Required package installations:
 Numpy
 NLTK 
 Sklearn
+Software requirements:
+1. PyCharm
+2. Python
 # data.csv:
 Contains two columns query and response
 # chatf.py:
@@ -18,6 +21,4 @@ Contains two columns query and response
 - Chatbot interface
 
 
-Software requirements:
-1. PyCharm
-2. Python
+
