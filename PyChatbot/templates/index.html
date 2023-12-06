@@ -10,8 +10,8 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0;
-            background-image: url('https://t4.ftcdn.net/jpg/04/49/87/85/360_F_449878585_YSsCp0KDf1GMkY8J5BVTuFHnWGJqn0TU.jpg');
+            background-color: rgba(0, 0, 0, 0.7);
+            background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/7/75/Kansas_City_Roos_logo.svg/300px-Kansas_City_Roos_logo.svg.png');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -33,6 +33,7 @@
             border-radius: 5px;
             margin-bottom: 10px;
             overflow-y: auto;
+            max-height: 300px;
         }
         input[type="text"] {
             width: 80%;
@@ -55,8 +56,14 @@
         }
 
         function addBotMessage(message) {
-            chatDiv.innerHTML += '<p><strong>Chatbot:</strong> ' + message + '</p>';
+            const formattedMessage = makeLinksClickable(message);
+            chatDiv.innerHTML += '<p><strong>Chatbot:</strong> ' + formattedMessage + '</p>';
         }
+        function makeLinksClickable(message) {
+        // Simple regex to identify links
+        const linkRegex = /(https?:\/\/[^\s]+)/g;
+        return message.replace(linkRegex, '<a href="$1" target="_blank">$1</a>');
+    }
 
         userInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {

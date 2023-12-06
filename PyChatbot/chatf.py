@@ -4,21 +4,20 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk.stem import WordNetLemmatizer, PorterStemmer
+from fuzzywuzzy import fuzz
 from nltk.corpus import stopwords
 import re
 
 nltk.download('punkt')
 nltk.download('wordnet')
 nltk.download('stopwords')
+import spacy
 
-
-# In[3]:
 
 
 class QASystem:
-
-
     def __init__(self, filepath):
+        self.nlp = spacy.load("en_core_web_sm")
         self.df = pd.read_csv(filepath, delimiter=';')
         self.questions_list = self.df['Query'].tolist()
         self.answers_list = self.df['Response'].tolist()
@@ -46,7 +45,16 @@ class QASystem:
         similarities = cosine_similarity(vectorized_text, self.X)
         max_similarity = np.max(similarities)
         print(max_similarity)
-        if max_similarity >= 0.6:  # You can use your threshold value here
+        if max_similarity < 0.6:
+            fuzzy_scores = [fuzz.ratio(processed_text, self.preprocess(q)) for q in self.questions_list]
+            max_fuzzy_score = max(fuzzy_scores)
+            print(max_fuzzy_score)
+            if max_fuzzy_score >= 40:
+                max_fuzzy_index = fuzzy_scores.index(max_fuzzy_score)
+                response = self.answers_list[max_fuzzy_index]
+                return response
+
+        if max_similarity >= 0.6:
             max_similar_question_index = np.argmax(similarities)
             response = self.answers_list[max_similar_question_index]
             return response
