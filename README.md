@@ -1,12 +1,6 @@
 # Chatbot
-Developed the student chatbot application using NLP, Cosine similarity and Python Flask.
-Required package installations:
-Numpy
-NLTK 
-Sklearn
-Software requirements:
-1. PyCharm
-2. Python
+Developed the student chatbot application using NLP, TF-IDF, Cosine similarity and Python Flask.
+Refer the requirements.txt file for required packages to install
 # data.csv:
 Contains two columns query and response
 # chatf.py:
